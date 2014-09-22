@@ -52,6 +52,7 @@ default_settings.display.text.green = 255
 default_settings.display.text.blue = 255
 
 settings = default_settings
+--settings = config.load(default_settings)
 
 default_bg = {0,0,0}
 du_bg = {0,0,150}
@@ -92,8 +93,8 @@ windower.register_event('action', function(act)
 			local party = windower.ffxi.get_party()
             local rollTargets = S{}
             for player in pairs(party) do
-                for effectedTarget = 1, #act.targets do
-                    if party[player].mob and act.targets[effectedTarget].id == party[player].mob.id then   
+                for affectedTarget = 1, #act.targets do
+                    if party[player].mob and act.targets[affectedTarget].id == party[player].mob.id then   
                         rollTargets:add(party[player].name)
                     end
                 end
@@ -161,13 +162,12 @@ end)
 	-- end
 -- end)
 
--- Find the latest roll by that name WITH that player in table, and remove them from target list
-------------------------------------------------- This should be rewritten to use get_roll_by_name -------------------------------------------------
+-- Find the rolls by that name with that player in table, and remove them from target list (do I need to validate player in table? do I need to run backwards?)
 function remove_player_roll(r,p)	
 	for index=#rolls,1,-1 do
 		if r == rolls[index].rollName and rolls[index].rollTotalTargets:contains(p) then
 			rolls[index]:remove_target(p)
-			-- if no targets are left in the roll's total targets, roll should be expired
+			--if no targets are left in the roll's total targets, roll should be expired
 			rolls[index]:check_if_exp()
 		end
 	end
@@ -178,7 +178,7 @@ end
 function get_roll_by_name(r,latest)
 	if not latest then
 		for i,roll in pairs(rolls) do
-			if r==roll.rollName then
+			if r==roll.rollName and not roll.rollExp then
 				return roll
 			end
 		end

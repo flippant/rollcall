@@ -4,7 +4,7 @@ local texts = require('texts')
 Display Class
 
 Class to create and destroy text instances for each roll at every update.
-Display Constructor expects a table of Sellings and a table of Rolls.
+Display Constructor expects a table of Settings and a table of Rolls.
 ]]
 
 Display = {}
@@ -14,8 +14,6 @@ function Display:new(settings, rollList)
     self.dSettings = settings
 	self.displayedObjects = {}
     self.__index = self
-
-    --self.text = texts.new(settings.display, settings)
 
     return t
 end

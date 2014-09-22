@@ -22,8 +22,8 @@ function Roll:new(o)
         rollNum = o.rollNum,		
 		rollTotalTargets = table.sort(o.rollTargets),
 		rollHistory = { {rollNum=o.rollNum,rollTargets=initialTargets} }, --table to store rollsNums and rollTargets
-		duChanceExp = false,
-		rollExp = false
+		duChanceExp = false, --set to true once DU Chance wears
+		rollExp = false --set to true when no rollTotalTargets left or forced to expire through method
     }
     o = attrs
     
